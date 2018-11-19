@@ -50,7 +50,7 @@ def readReplaceWrite(templateFile, packageName, moduleName):
     content = replace(packageName, moduleName, content)
     filename = strip(templateFile)
     isATest = bool(len(filename))
-    filename = packageName+filename
+    filename = "{0}/{0}{1}".format(packageName, filename)
     write(isATest, filename, content)
 
 def manageArgs():
@@ -59,14 +59,15 @@ def manageArgs():
         args['-p'] = args['-m'].lower()
     return args
 
-def setUpPath():
-    for directory in [DEFAULT_PATH, DEFAULT_TEST_PATH]:
+def setUpPath(packageName):
+    paths = ["{}{}/".format(path, packageName) for path in [DEFAULT_PATH, DEFAULT_TEST_PATH]]
+    for directory in paths:
         if(not os.path.exists(directory)):
             os.makedirs(directory)
 
 if (__name__ == '__main__'):
     args = manageArgs()
-    setUpPath()
+    setUpPath(args['-p'])
     templateFiles = os.listdir(TEMPLATE_PATH)
     for file in templateFiles:
         readReplaceWrite(file, args['-p'], args['-m'])
