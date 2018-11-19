@@ -6,24 +6,24 @@ import chisel3._
   * This provides an alternate way to run tests, by executing then as a main
   * From sbt (Note: the test: prefix is because this main is under the test package hierarchy):
   *
-  * test:runMain <?@package@?>.<?@class@?>Main
+  * test:runMain <?@package@?>.<?@module@?>Main
   *
   * To see all command line options use:
   *
-  * test:runMain <?@package@?>.<?@class@?>Main --help
+  * test:runMain <?@package@?>.<?@module@?>Main --help
   *
   * To run with verilator:
   *
-  * test:runMain <?@package@?>.<?@class@?>Main --backend-name verilator
+  * test:runMain <?@package@?>.<?@module@?>Main --backend-name verilator
   *
   * To run with verilator from your terminal shell use:
   *
-  * sbt 'test:runMain <?@package@?>.<?@class@?>Main --backend-name verilator'
+  * sbt 'test:runMain <?@package@?>.<?@module@?>Main --backend-name verilator'
   *
   */
-object <?@class@?>Main extends App {
-  iotesters.Driver.execute(args, () => new <?@class@?>) {
-    c => new <?@class@?>UnitTester(c)
+object <?@module@?>Main extends App {
+  iotesters.Driver.execute(args, () => new <?@module@?>) {
+    c => new <?@module@?>UnitTester(c)
   }
 }
 
@@ -35,13 +35,13 @@ object <?@class@?>Main extends App {
   *
   * To run from sbt
   *
-  * test:runMain <?@package@?>.<?@class@?>Repl
+  * test:runMain <?@package@?>.<?@module@?>Repl
   *
   * To run from sbt and see the half a zillion options try
   *
-  * test:runMain <?@package@?>.<?@class@?>Repl --help
+  * test:runMain <?@package@?>.<?@module@?>Repl --help
   *
   */
-object <?@class@?>Repl extends App {
-  iotesters.Driver.executeFirrtlRepl(args, () => new <?@class@?>)
+object <?@module@?>Repl extends App {
+  iotesters.Driver.executeFirrtlRepl(args, () => new <?@module@?>)
 }

@@ -2,7 +2,7 @@ package <?@package@?>
 
 import chisel3._
 
-class <?@class@?> extends Module {
+class <?@module@?> extends Module {
     val io = IO(new Bundle {
 //      val in = Input(UInt(X.W))
 //      val out = Output(Bool())

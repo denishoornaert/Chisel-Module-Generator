@@ -15,17 +15,18 @@ Options:
   -m MODULE             The name of the module to be generated
   -p PACKAGE            The name of the package in which the module will be placed
 """
+
 import os
 from docopt import docopt
 
 TEMPLATE_PATH = "templates/"
 DEFAULT_PATH = "src/main/scala/"
-DEFAULT_TEST_PATH = "src/test/scala"
+DEFAULT_TEST_PATH = "src/test/scala/"
 EXTENSION = "scala"
 
 def replace(packageName, moduleName, template):
     template = template.replace("<?@package@?>", packageName)
-    template = template.replace("<?@module@?>", packageName)
+    template = template.replace("<?@module@?>", moduleName)
     return template
 
 def read(fileName):
@@ -34,26 +35,38 @@ def read(fileName):
     readFile.close()
     return content
 
-def write(fileName, content):
-    writeFile = open(DEFAULT_PATH+"/"+fileName+"."+EXTENSION, "w")
+def write(isATest, fileName, content):
+    destinationPath = DEFAULT_TEST_PATH if(isATest) else DEFAULT_PATH
+    completePath = "{}{}.{}".format(destinationPath, fileName, EXTENSION)
+    writeFile = open(completePath, "w")
     writeFile.write(content)
     writeFile.close()
+
+def strip(filename):
+    return filename[len("module"):len(filename)-len(".txt")]
 
 def readReplaceWrite(templateFile, packageName, moduleName):
     content = read(templateFile)
     content = replace(packageName, moduleName, content)
-    write(moduleName, content)
+    filename = strip(templateFile)
+    isATest = bool(len(filename))
+    filename = packageName+filename
+    write(isATest, filename, content)
 
 def manageArgs():
     args = docopt(__doc__)
-    if(arguments['-p'] == None ):
-        arguments['-p'] = arguments['-m'].lower()
+    if(args['-p'] == None ):
+        args['-p'] = args['-m'].lower()
     return args
+
+def setUpPath():
+    for directory in [DEFAULT_PATH, DEFAULT_TEST_PATH]:
+        if(not os.path.exists(directory)):
+            os.makedirs(directory)
 
 if (__name__ == '__main__'):
     args = manageArgs()
-    print(args)
-    # --------------------------------------------------------------------------
+    setUpPath()
     templateFiles = os.listdir(TEMPLATE_PATH)
     for file in templateFiles:
         readReplaceWrite(file, args['-p'], args['-m'])
