@@ -11,3 +11,11 @@ class <?@module@?> extends Module {
 //  to fill...
 
 }
+
+/*
+ * Enable the generation of the FIRRTL and Verilog equivalents once called via :
+ * sbt "runMain <?@package@?>.<?@module@?>"
+ */
+object VerilogGenerator extends App {
+    chisel3.Driver.execute(args, () => new <?@module@?>)
+}
