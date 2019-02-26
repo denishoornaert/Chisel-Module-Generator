@@ -19,7 +19,7 @@ Options:
 import os
 from docopt import docopt
 
-TEMPLATE_PATH = "templates/"
+TEMPLATE_PATH = "Chisel-Module-Generator/templates/"
 DEFAULT_PATH = "src/main/scala/"
 DEFAULT_TEST_PATH = "src/test/scala/"
 EXTENSION = "scala"
