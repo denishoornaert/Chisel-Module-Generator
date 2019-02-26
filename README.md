@@ -1,7 +1,7 @@
 # Chisel Module Generator
 
 It is only once that the Chisel project has been set up that the real mess begins...
-Maintaining a good and sound organization can be time consuming.
+Maintaining a good and sound organisation can be time consuming.
 That is why this small project has been created : generating multiple template files via a single command line !
 
 ****
